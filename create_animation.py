@@ -44,7 +44,7 @@ def main():
 
         try:
             vid = VideoFileClip(f"results/video/{en}-episode-999.mp4")
-            vid.write_gif(f"results/video/{en}-episode-999.gif")
+            vid.write_gif(f"results/video/{en}-episode-999.gif", fps=5)
         except:
             pass
 
