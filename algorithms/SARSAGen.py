@@ -24,11 +24,19 @@ class SARSAGen(SARSA):
         kMatrix = 1 / (
             1 + np.exp(self.beta * (self._get_manhattan_matrix((row, col)) - self.c))
         )
-        offset = (pLoc * 4) + dLoc
+
         rows = np.arange(5).reshape(5, 1) * 100
         cols = np.arange(5) * 20
-        stateMatrix = rows + cols + offset
-        kMatrix[row, col] = 0
+        gridBase = rows + cols
+
+        if pLoc < 4:
+            offsets = (pLoc * 4) + np.arange(4)
+            offsets = offsets.reshape(-1, 1, 1)
+            stateMatrix = gridBase + offsets
+        else:
+            offset = (pLoc * 4) + dLoc
+            stateMatrix = gridBase + offset
+
         return kMatrix, stateMatrix
 
     def update(self, state, action, reward, next_state, next_action, terminated):
